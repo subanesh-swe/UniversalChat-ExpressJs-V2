@@ -1,5 +1,5 @@
-const socket = io.connect('http://localhost:3000', { query: { userId: UserId } });
-//const socket = io.connect(window.location.protocol + "//" + window.location.hostname + ((window.location.port) ? ":4000" : ""), { query: { userId: UserId } });
+//const socket = io.connect('http://localhost:3000', { query: { userId: UserId } });
+const socket = io.connect(window.location.protocol + "//" + window.location.hostname + ((window.location.port) ? ":3000" : ""), { query: { userId: UserId } });
 
 const sender = document.querySelector("#Name");
 const text_input = document.querySelector('#input-message');
