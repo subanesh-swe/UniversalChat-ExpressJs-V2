@@ -27,6 +27,15 @@
     "universalchat-nodejs": "bin/www"
   },
   "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/subanesh-swe/UniversalChat-NodeJs.git"
+  },
   "author": "Subanesh_swe",
-  "license": "ISC"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/subanesh-swe/UniversalChat-NodeJs/issues"
+  },
+  "homepage": "https://github.com/subanesh-swe/UniversalChat-NodeJs#readme",
+  "main": "app.js"
 }
