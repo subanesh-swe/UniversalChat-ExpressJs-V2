@@ -47,7 +47,6 @@ app.use(express.static(path.join(__dirname, 'public', 'scripts')));
 app.use('/socket.io', express.static(path.join(__dirname, 'node_modules', 'socket.io', 'client-dist')));
 
 
-
 /* MongoDB connection */
 var mongooseRetryCount = 0;
 const mongooseMaximumRetryCount = 10;
