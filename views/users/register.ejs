@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+    <link rel="stylesheet" href="/login.css">
+    <style>
+        :root {
+            --form-height: 500px;
+            --form-width: 380px;
+            /* --form-input-margin-top: 25px; */
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+</head>
+<body>
+    <div class="form-container">
+        <form class="form" id="loginForm" onsubmit="formSubmitHandler(event, 'loginForm');">
+            <div class="form-content">
+                <h2>Signup</h2>
+                <div class="inputBox">
+                    <input id="username" type="text" name="username" maxlength="26" oninput="chechInputLengthValidity( this, 'warningLabelUsername' )" placeholder=" " required="required" />
+                    <label for="username">Username</label>
+                    <warningLabel id="warningLabelUsername"></warningLabel>
+                    <i></i>
+                </div>
+                <div class="inputBox">
+                    <input id="email" type="email" name="email" maxlength="56" oninput="chechInputLengthValidity( this, 'warningLabelPassword' )" placeholder=" " required="required" />
+                    <label for="email">Email</label>
+                    <warningLabel id="warningLabelEmail"></warningLabel>
+                    <i></i>
+                </div>
+                <div class="inputBox">
+                    <input id="password" type="password" name="password" maxlength="26" oninput="chechInputLengthValidity( this, 'warningLabelPassword' )" placeholder=" " required="required" />
+                    <label for="password">Password</label>
+                    <warningLabel id="warningLabelPassword"></warningLabel>
+                    <eyeBtn id="eye-btn" class="eye" onclick="togglePassword( 'eye-btn', 'password' )"></eyeBtn>
+                    <i></i>
+                </div>
+                <div class="links">
+                    <a href="#">Forgot Password</a>
+                    <a href="./login">Signin</a>
+                </div>
+                <input type="submit" value="Signup" />
+            </div>
+        </form>
+    </div>
+    <script src="/formHandler.js"></script>
+</body>
+</html>

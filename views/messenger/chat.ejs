@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<script src="/socket.io/socket.io.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.2/socket.io.js" integrity="sha512-jMNwWSmjje4fjYut9MBGKXw5FZA6D67NHAuC9szpjbbjg51KefquNfvn4DalCbGfkcv/jHsHnPo1o47+8u4biA==" crossorigin="anonymous"></script>
+    <!-- Generate integrity using https://www.srihash.org/ -->
+    <script>
+        function decodeString(str) {
+            return str.replace(/&#(\d+);/g, function (match, dec) {
+                return String.fromCharCode(dec);
+            });
+        }
+        const UserName = decodeString(decodeURIComponent("<%= encodeURIComponent(userName) %>"));
+        const UserId = decodeString(decodeURIComponent("<%= encodeURIComponent(userId) %>"));
+        const RoomName = decodeString(decodeURIComponent("<%= encodeURIComponent(roomName) %>"));
+        const RoomId = decodeString(decodeURIComponent("<%= encodeURIComponent(roomId) %>"));
+        const RoomData = JSON.parse(decodeString(decodeURIComponent("<%= encodeURIComponent(roomData) %>")));
+        const RecipientIds = RoomData.participants.map(participant => participant.userId);
+        RecipientIds.splice(RecipientIds.indexOf(UserId), 1);
+    </script>
+    <link rel="stylesheet" href="/chat.css">
+    <!--<link rel="stylesheet" href="/chat_mobile.css">-->
+    <title><%= unescape( title ) %></title>
+</head>
+<body>
+
+    <div id="content">
+        <header id="header-content">
+            <nav class="navigation" role="navigation">
+                <ul class="app" role="tablist">
+                    <li><a trager="_self" href="#" class="logo" title="Go to homepage" aria-label="Go to homepage">UNIVERSAL CHAT</a></li>
+                    <li><a target="_self" href="/messenger/rooms" title="Go to messenger" aria-label="Go to messenger">Messenger</a></li>
+                    <li><a target="_self" href="/messenger/rooms" title="Go to I0T" aria-label="Go to IOT">IOT</a></li>
+                </ul>
+                <ul class="user" role="tablist">
+                    <li><a target="_self" href="#" title="room name" aria-label="roomname"><%= unescape(roomName) %></a></li>
+                    <li><a target="_self" href="#" title="username" aria-label="username"><%= unescape(userName) %></a></li>
+                    <li><a trager="_self" href="/users/logout" title="Logout" aria-label="Logout">logout</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div id="chat-content">
+            <div id="chat-box">
+                <div id="chat-log">
+                    <!-- onclick="document.querySelector('#input-message').focus()"-->
+                    <div class="chat friend" style="justify-content:center;">
+                        <div class="message">
+                            <div class="username" style="display: flex; font-size: 0.75rem; justify-content: center;">Admin Subanesh_SWE</div>
+                            <div class="textcont" style="justify-content:center; text-align:center;">Welcome to Universal Chat</div>
+                            <!--<div class="time">start messaging...</div>-->
+                        </div>
+                    </div>
+
+                    <div class="chat friend">
+                        <div class="message">
+                            <div class="username">subanesh</div>
+                            <div class="textcont">This is swe. This is swe. This is swe. This is swe. [sample msg for debugging]</div>
+                            <div class="time">time</div>
+                        </div>
+                    </div>
+                    <div class="chat self">
+                        <div class="message">
+                            <div class="username">subanesh</div>
+                            <div class="textcont">This is swe. This is swe. This is swe. This is swe. [sample msg for debugging]</div>
+                            <div class="time">time</div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div id="input-container">
+                    <!--onclick="document.querySelector('#input-message').focus()"-->
+                    <div id="input-message-outer">
+                        <textarea id="input-message" placeholder="Type something..."></textarea>
+                    </div>
+                    <button id="send-message">Send</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <script src="/chat.js"></script>
+</body>
+</html>
