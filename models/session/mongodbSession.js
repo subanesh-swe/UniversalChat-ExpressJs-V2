@@ -34,13 +34,17 @@ const customMongodbSession = {
     secret: 'This is a secret',
     cookie: {
         'cookieName': "Subanesh's_server",
-        'cookieValue': "Universal chat by Subanesh",
+        'cookieValue': "Universal chat by Subanesh", //Custom cookies, can be set permanently | temp, for additional reference
         maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
-        httpOnly: true,
+        path: "/",//if / the cookies will be sent for all paths
+        httpOnly: false,// if true, the cookie cannot be accessed from within the client-side javascript code.
+        //secure: true,// true->cookie has to be sent over HTTPS
+        sameSite: null,//- `none` will set the `SameSite` attribute to `None` for an explicit cross-site cookie.
+
     },
     store: store,
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: false
 };
 
 module.exports = customMongodbSession;
