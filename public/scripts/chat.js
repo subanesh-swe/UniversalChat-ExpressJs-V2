@@ -41,7 +41,7 @@ send_message.addEventListener("click", () => {
     var rawMessage = rawMessageDiv.innerHTML;
 
     var currentdate = new Date();
-    var datetime = currentdate.getDay() + "/" + currentdate.getMonth()
+    var datetime = currentdate.getDate() + "/" + currentdate.getMonth()
         + "/" + currentdate.getFullYear() + " @ "
         + currentdate.getHours() + ":"
         + currentdate.getMinutes() + ":" + currentdate.getSeconds();
@@ -76,7 +76,7 @@ socket.on("receiveMessage", (receivedData) => {
     var rawMessage = rawMessageDiv.innerHTML;
 
     var currentdate = new Date();
-    var datetime = currentdate.getDay() + "/" + currentdate.getMonth()
+    var datetime = currentdate.getDate() + "/" + currentdate.getMonth()
         + "/" + currentdate.getFullYear() + " @ "
         + currentdate.getHours() + ":"
         + currentdate.getMinutes() + ":" + currentdate.getSeconds();

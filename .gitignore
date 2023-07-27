@@ -3,6 +3,12 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Added by subanesh
+/.vscode
+/.env
+/nuget.config
+/UniversalChat-Nodejs.esproj
+
 # User-specific files
 *.rsuser
 *.suo
@@ -361,7 +367,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/.vscode
-/.env
-/nuget.config
-/UniversalChat-Nodejs.esproj
