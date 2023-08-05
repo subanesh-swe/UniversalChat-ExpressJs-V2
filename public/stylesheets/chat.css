@@ -1,7 +1,7 @@
 
 #chat-content {
-/*    height: calc(100% - 50px);*/
-    flex-grow:1;
+    height: calc(100% - 50px);
+    flex-grow:0;
 }
 
 
@@ -164,11 +164,11 @@
             }
 
             #input-container > #input-message-outer > #input-message::-webkit-scrollbar-track {
-                background: var(--scrollbar-track-color);
+                background: var(--scrollbar-track-color-hover);
             }
 
             #input-container > #input-message-outer > #input-message::-webkit-scrollbar-thumb {
-                background: var(--scrollbar-thumb-color);
+                background: var(--scrollbar-thumb-color-hover);
             }
 
     #input-container > #send-message {
