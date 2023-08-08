@@ -1,5 +1,6 @@
-@import url("https://fonts.googleapis.com/css?family=Lato:300,400,500,600,700&amp");
+/*@import url("https://fonts.googleapis.com/css?family=Lato:300,400,500,600,700&amp");*/
 /*@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700&amp");*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 
 :root {
     /* Dark mode */
@@ -28,29 +29,32 @@
     --chat-color-pallet-9: rgb(242 65 65); /* font in-valid hover color */
     --chat-color-pallet-10: rgb(222 222 222); /* font in-valid hover text color */
 
-
+    
+    --divice-output-content-background: var(--chat-color-pallet-2);
 
     --body-background-color: var(--chat-color-pallet-00);
     --body-background: var(--chat-color-pallet-0);
     --font-color: var(--chat-color-pallet-7);
-    --font-family: 'Lato', sans-serif;
-    --nav-font-color: var(--chat-color-pallet-4);
-    --nav-background: var(--chat-color-pallet-1);
-    --nav-font-size: 1rem;
-    --nav-font-weight: 700;
+    --font-family: 'Poppins', sans-serif;
+    --header-font-color: var(--chat-color-pallet-4);
+    --header-font-background: var(--chat-color-pallet-1);
+    --header-font-size: 14px;
+    --header-font-weight: 400;
+    --header-app-logo-font-size: 1.2em;
+    --header-app-logo-font-weight: 600;
     --chat-box-background: var(--chat-color-pallet-0);
     --chat-friend-message-color: var(--chat-color-pallet-2);
     --chat-friend-message-font-color: var(--chat-color-pallet-5);
     --chat-self-message-color: var(--chat-color-pallet-3);
     --chat-self-message-font-color: var(--chat-color-pallet-6);
-    --chat-message-username-font-size: 0.85rem;
-    --chat-message-username-font-weight: 700;
-    --chat-message-font-size: 0.85rem;
-    --chat-message-font-weight: 600;
-    --chat-message-time-font-size: 0.75rem;
+    --chat-message-username-font-size: 14px;
+    --chat-message-username-font-weight: 500;
+    --chat-message-font-size: 14px;
+    --chat-message-font-weight: 400;
+    --chat-message-time-font-size: 10px;
     --chat-message-time-font-weight: 400;
     --input-container-font-color: var(--chat-color-pallet-10);
-    --input-container-font-size: 0.85rem;
+    --input-container-font-size: 14px;
     --input-container-font-weight: 600;
     --input-container-background: var(--chat-color-pallet-1);
     --input-message-background: var(--chat-color-pallet-3);
@@ -63,6 +67,8 @@
     --input-send-hover-font-color: var(--chat-color-pallet-8);
     --scrollbar-track-color: var(--body-background);
     --scrollbar-thumb-color: var(--chat-self-message-color);
+    --scrollbar-track-color-hover: var(--chat-self-message-color);
+    --scrollbar-thumb-color-hover: var(--body-background);
 }
 
 
@@ -73,15 +79,21 @@
 
 body {
     background-color: var(--body-background-color);
-    background: var(--body-background);
     color: var(--font-color);
     font-family: var(--font-family);
 }
 
-#content {
-    /*    position: fixed;*/
+#content-container {
+    background: var(--body-background);
     height: 100vh;
     width: 100vw;
+    background: none;
+}
+
+#content {
+    height: 100%;
+    width: 100%;
+    position: fixed;
     background: none;
     display: flex;
     flex-direction: column;
@@ -89,24 +101,25 @@ body {
 
 header {
     display: block;
-    flex-grow: 0;
 }
 
 #header-content {
-    font: 14px/normal var(--font-family);
-    /*    min-width: 1204px;*/
-    /*    min-width: 1164px, 1362px;*/
-    width: 100%;
-    height: 60px;
+    font: var(--font-family);
+    color: var(--header-font-color);
+    font-size: var(--header-font-size);
+    font-size: var(--header-font-weight);
     position: relative;
     transition-property: background;
     transition-duration: 0s;
     transition-delay: 1.5s;
     border-bottom: none;
     transition-delay: 0s;
-    height: unset;
     padding-inline-start: 0px;
     background: var(--nav-background);
+    width: 100%;
+    height: 30px;
+    padding: 10px 0;
+    flex-grow: 0;
 }
 
     a, #header-content a, #header-content a:hover {
@@ -118,29 +131,28 @@ nav {
 }
 
 ul {
-    display: block;
+    display: inline-block;
     list-style-type: disc;
     margin-block-start: 0em;
     margin-block-end: 0em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     padding-inline-start: 0px;
-    display: inline-block;
 }
 
 li {
     display: list-item;
-    padding: 3px 0;
+    padding: 0 3px;
     margin: 0 12px;
-    border-radius: 10px;
-    line-height: 25px;
-    font-size: 11px;
+    border-radius: 5px;
+    font-size: var(--header-font-size);
+    font-weight: var(--header-font-weight);
     letter-spacing: initial;
 }
 
 .navigation {
     padding: 0;
-    margin: 6px;
+    /* margin: 6px; */
     border-bottom: none;
     background: none;
     overflow-y: inherit;
@@ -159,8 +171,8 @@ li {
     }
 
     .navigation .app .logo {
-        font-size: 1.1em;
-        font-weight: 600;
+        font-size: var(--header-app-logo-font-size);
+        font-weight: var(--header-app-logo-font-weight);
     }
 
     .navigation, .navigation a, .navigation a:visited {
@@ -172,10 +184,10 @@ li {
         }
 
             .navigation li {
-                vertical-align: top;
+                vertical-align: middle;
             }
 
-            .navigation > ul li {
+            .navigation .app {
                 text-transform: uppercase;
             }
 
