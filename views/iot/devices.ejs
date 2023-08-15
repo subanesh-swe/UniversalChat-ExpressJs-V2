@@ -24,7 +24,6 @@
             --radar-color-2: rgb(0 0 20); /* radar inner radiend color */
             --z-index-form-1: 3; /* form input z-index */
             --z-index-form-2: 4; /* form input hover z-index */
-
             /*--radar-color-1: rgb(0, 58, 248);*/ /* radar inner lines */
             /*--radar-color-2: rgb(0 242 255 / 0.50);*/ /* radar inner radiend color */
             /* --form-height: 500px; */
@@ -68,7 +67,7 @@
                         <li><a target="_self" href="/iot/devices" title="Go to I0T" aria-label="Go to IOT">IOT</a></li>
                     </ul>
                     <ul class="user" role="tablist">
-                        <li><a target="_self" href="#" title="room name" aria-label="roomname">ROOMS LIST</a></li>
+                        <li><a target="_self" href="#" title="device name" aria-label="devicename">DEVICES LIST</a></li>
                         <li><a target="_self" href="#" title="username" aria-label="username"><%= unescape(userName) %></a></li>
                         <li><a trager="_self" href="/users/logout" title="Logout" aria-label="Logout">logout</a></li>
                     </ul>
@@ -78,12 +77,12 @@
                 <form class="form" id="loginForm" onsubmit="event.preventDefault(); formSubmitHandler(event, 'loginForm');">
                     <div class="form-content">
                         <span class="closeBth" onclick="document.getElementById('form-container').style.display='none'">&times;</span>
-                        <h2 id="form-title">Create new Room</h2>
+                        <h2 id="form-title">Create new Device</h2>
                         <input type="text" id="form-title-sender" name="formTitleSender" value="createPassword" style="display:none; height:0; width:0;" />
                         <div class="inputBox">
-                            <input id="roomNameOrId" type="text" name="roomNameOrId" maxlength="26" oninput="chechInputLengthValidity( this, 'warningLabelRoomName' )" placeholder=" " required />
-                            <label for="roomNameOrId">Room name</label>
-                            <warningLabel id="warningLabelRoomName"></warningLabel>
+                            <input id="deviceNameOrId" type="text" name="deviceNameOrId" maxlength="26" oninput="chechInputLengthValidity( this, 'warningLabelDeviceName' )" placeholder=" " required />
+                            <label for="deviceNameOrId">Device name</label>
+                            <warningLabel id="warningLabelDeviceName"></warningLabel>
                             <i></i>
                         </div>
                         <div class="inputBox" id="passwordContainer" style="visibility: hidden;">
@@ -117,42 +116,42 @@
             </div>
             <div id="room-content">
                 <div id="room-log">
-                    <h4><%= roomListLabel %></h4>
+                    <h4><%= deviceListLabel %></h4>
 
-                    <% const roomElements = roomList.map(room => { %>
+                    <% const deviceElements = deviceList.map(device => { %>
                     <div class="room">
-                        <button onclick="location.href='rooms/<%= room.roomId %>'"><%= room.roomName %></button>
+                        <button onclick="location.href='devices/<%= device.deviceId %>'"><%= device.deviceName %></button>
                     </div>
                     <% }); %>
-                    <!--<%= roomElements.join('') %>-->
+                    <!--<%= deviceElements.join('') %>-->
                 </div>
 
                 <div id="input-container">
-                    <button id="createNewRoom" onclick=" createNewRoom(); ">Create new Room</button>
-                    <button id="joinNewRoom" onclick=" JoinNewRoom(); ">Join new Room</button>
+                    <button id="createNewDevice" onclick=" createNewDevice(); ">Create new Device</button>
+                    <button id="joinNewDevice" onclick=" JoinNewDevice(); ">Join new Device</button>
 
                 </div>
                 <script>
                     const formContainer = document.getElementById('form-container');
                     const formTitle = document.getElementById('form-title');
                     const formTitleSender = document.getElementById('form-title-sender');
-                    const formRoomNameOrId = document.querySelector("label[for='roomNameOrId']");
+                    const formDeviceNameOrId = document.querySelector("label[for='deviceNameOrId']");
                     const formCreatePasswordLabel = document.querySelector("label[for='enabelPassword']");
                     const formSubmitBtn = document.getElementById('form-submit-btn');
 
-                    function createNewRoom() {
-                        formTitle.innerHTML = "Create new Room";
-                        formTitleSender.value = "Create new Room";
-                        formRoomNameOrId.innerHTML = "Room name";
+                    function createNewDevice() {
+                        formTitle.innerHTML = "Create new Device";
+                        formTitleSender.value = "Create new Device";
+                        formDeviceNameOrId.innerHTML = "Device name";
                         formCreatePasswordLabel.innerHTML = "<span class='custom-checkbox'></span>Create Password";
                         formSubmitBtn.value = "Create";
                         formContainer.style.display = 'flex';
                     }
 
-                    function JoinNewRoom() {
-                        formTitle.innerHTML = "Join new Room";
-                        formTitleSender.value = "Join new Room";
-                        formRoomNameOrId.innerHTML = "Room ID";
+                    function JoinNewDevice() {
+                        formTitle.innerHTML = "Join new Device";
+                        formTitleSender.value = "Join new Device";
+                        formDeviceNameOrId.innerHTML = "Device ID";
                         formCreatePasswordLabel.innerHTML = "<span class='custom-checkbox'></span>Has Password";
                         formSubmitBtn.value = "Join";
                         formContainer.style.display = 'flex';

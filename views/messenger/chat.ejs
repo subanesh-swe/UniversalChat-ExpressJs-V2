@@ -24,63 +24,93 @@
     <link rel="stylesheet" href="/chat.css">
     <!--<link rel="stylesheet" href="/chat_mobile.css">-->
     <title><%= unescape( title ) %></title>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 80%;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
+    <div id="content-container">
+        <div id="content">
+            <header id="header-content">
+                <nav class="navigation" role="navigation">
+                    <ul class="app" role="tablist">
+                        <li><a trager="_self" href="#" class="logo" title="Go to homepage" aria-label="Go to homepage">UNIVERSAL CHAT</a></li>
+                        <li><a target="_self" href="/messenger/rooms" title="Go to messenger" aria-label="Go to messenger">Messenger</a></li>
+                        <li><a target="_self" href="/iot/devices" title="Go to I0T" aria-label="Go to IOT">IOT</a></li>
+                    </ul>
+                    <ul class="user" role="tablist">
+                        <li><a target="_self" href="#" title="room name" aria-label="roomname"><%= unescape(roomName) %></a></li>
+                        <li><a target="_self" href="#" title="username" aria-label="username"><%= unescape(userName) %></a></li>
+                        <li><a trager="_self" href="/users/logout" title="Logout" aria-label="Logout">logout</a></li>
+                    </ul>
+                </nav>
+            </header>
+            <div id="chat-content">
+                <div id="chat-box">
+                    <div id="chat-log">
+                        <div id="map"></div>
+                         <script>
+                          var mymap = L.map('map').setView([51.505, -0.09], 13);
+                          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+                            maxZoom: 18,
+                          }).addTo(mymap);
+                          var marker = L.marker([51.5, -0.09]).addTo(mymap);
+                          function updateLocation(lat, lng) {
+                            marker.setLatLng([lat, lng]);
+                            mymap.setView([lat, lng], 13);
+                          }
+                          function getLocation() {
+                            var lat = parseFloat(document.getElementById("lat").value);
+                            var lng = parseFloat(document.getElementById("lng").value);
+                            updateLocation(lat, lng);
+                          }
+                        </script>
+                        <input type="text" id="lat" placeholder="Latitude">
+                        <input type="text" id="lng" placeholder="Longitude">
+                        <button onclick="getLocation()">Update Location</button>
+                        <!-- onclick="document.querySelector('#input-message').focus()"-->
+                        <!--<div class="chat friend" style="justify-content:center;">
+                            <div class="message">
+                                <div class="username" style="display: flex; font-size: 0.75rem; justify-content: center;">Admin Subanesh_SWE</div>
+                                <div class="textcont" style="justify-content:center; text-align:center;">Welcome to Universal Chat</div>-->
+                                <!--<div class="time">start messaging...</div>-->
+                            <!--</div>
+                        </div>-->
 
-    <div id="content">
-        <header id="header-content">
-            <nav class="navigation" role="navigation">
-                <ul class="app" role="tablist">
-                    <li><a trager="_self" href="#" class="logo" title="Go to homepage" aria-label="Go to homepage">UNIVERSAL CHAT</a></li>
-                    <li><a target="_self" href="/messenger/rooms" title="Go to messenger" aria-label="Go to messenger">Messenger</a></li>
-                    <li><a target="_self" href="/messenger/rooms" title="Go to I0T" aria-label="Go to IOT">IOT</a></li>
-                </ul>
-                <ul class="user" role="tablist">
-                    <li><a target="_self" href="#" title="room name" aria-label="roomname"><%= unescape(roomName) %></a></li>
-                    <li><a target="_self" href="#" title="username" aria-label="username"><%= unescape(userName) %></a></li>
-                    <li><a trager="_self" href="/users/logout" title="Logout" aria-label="Logout">logout</a></li>
-                </ul>
-            </nav>
-        </header>
-        <div id="chat-content">
-            <div id="chat-box">
-                <div id="chat-log">
-                    <!-- onclick="document.querySelector('#input-message').focus()"-->
-                    <div class="chat friend" style="justify-content:center;">
-                        <div class="message">
-                            <div class="username" style="display: flex; font-size: 0.75rem; justify-content: center;">Admin Subanesh_SWE</div>
-                            <div class="textcont" style="justify-content:center; text-align:center;">Welcome to Universal Chat</div>
-                            <!--<div class="time">start messaging...</div>-->
+                        <!--<div class="chat friend">
+                            <div class="message">
+                                <div class="username">subanesh</div>
+                                <div class="textcont">This is swe. This is swe. This is swe. This is swe. [sample msg for debugging]</div>
+                                <div class="time">time</div>
+                            </div>
                         </div>
+                        <div class="chat self">
+                            <div class="message">
+                                <div class="username">subanesh</div>
+                                <div class="textcont">This is swe. This is swe. This is swe. This is swe. [sample msg for debugging]</div>
+                                <div class="time">time</div>
+                            </div>
+                        </div>-->
+
+
                     </div>
 
-                    <div class="chat friend">
-                        <div class="message">
-                            <div class="username">subanesh</div>
-                            <div class="textcont">This is swe. This is swe. This is swe. This is swe. [sample msg for debugging]</div>
-                            <div class="time">time</div>
+                    <div id="input-container">
+                        <!--onclick="document.querySelector('#input-message').focus()"-->
+                        <div id="input-message-outer">
+                            <textarea id="input-message" placeholder="Type something..."></textarea>
                         </div>
-                    </div>
-                    <div class="chat self">
-                        <div class="message">
-                            <div class="username">subanesh</div>
-                            <div class="textcont">This is swe. This is swe. This is swe. This is swe. [sample msg for debugging]</div>
-                            <div class="time">time</div>
-                        </div>
+                        <button id="send-message">Send</button>
                     </div>
 
 
                 </div>
-
-                <div id="input-container">
-                    <!--onclick="document.querySelector('#input-message').focus()"-->
-                    <div id="input-message-outer">
-                        <textarea id="input-message" placeholder="Type something..."></textarea>
-                    </div>
-                    <button id="send-message">Send</button>
-                </div>
-
-
             </div>
         </div>
     </div>

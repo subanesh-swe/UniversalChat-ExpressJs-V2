@@ -11,22 +11,22 @@ const router = express.Router();
 
 router.use(function (req, res, next) {
     if (req.session && req.session.name) {
-        console.log(`@/meggenger > Meggenger Router [ router.use All ] : Authentication verified, req[path]: '${req.path}'`);
+        console.log(`@/messenger > Messenger Router [ router.use All ] : Authentication verified, req[path]: '${req.path}'`);
         next();
     } else {
         if (req.method === 'GET') {
-            console.log(`@/meggenger > Meggenger Router [ router.use GET ] : Authentication invalide, req[path]: '${req.path}', redir >>> @/users/login`);
+            console.log(`@/messenger > Messenger Router [ router.use GET ] : Authentication invalide, req[path]: '${req.path}', redir >>> @/users/login`);
             res.redirect('/users/login');
         } else {
-            console.log(`@/meggenger > Meggenger Router [ router.use ALL ] : Authentication invalide, req[path]: '${req.path}', sending(report)`);
+            console.log(`@/messenger > Messenger Router [ router.use ALL ] : Authentication invalide, req[path]: '${req.path}', sending(report)`);
             return res.json({ result: true, redirect: "/users/login", alert: "Access Denied!!! either due to Illegal access to server or communication error, please Login!!!" });
         }
     }
 });
 
 router.get('/', function (req, res, next) {
-    console.log(`@/meggenger [ Get ] : >>>>> redir > @/meggenger/rooms`);
-    res.redirect('/meggenger/rooms')
+    console.log(`@/messenger [ Get ] : >>>>> redir > @/messenger/rooms`);
+    res.redirect('/messenger/rooms')
 });
 
 router.get('/rooms', async (req, res, next) => {
@@ -36,7 +36,7 @@ router.get('/rooms', async (req, res, next) => {
 
         //roomListData = await roomsDatabase.find({ participants: { $in: [req.session.name] } });
         roomListData = await roomsDatabase.find({ participants: { $elemMatch: { username: req.session.name } } });
-        //console.log(`rooms : ${roomListData}`);
+        console.log(`rooms : ${roomListData}`);
         if (roomListData.length === 0) {
             roomListLabel = "You haven't joined any rooms yet. Please create a new room or join a room";
             console.log('No data found.');
@@ -60,11 +60,11 @@ router.get('/rooms', async (req, res, next) => {
 
 router.post('/rooms', async (req, res) => {
     try {
-        //var temp = { sender: "subanesh-swe", message: "this is a reply from@/meggenger/rooms [post] " }; /* ------------------------------------------------ */
+        //var temp = { sender: "subanesh-swe", message: "this is a reply from@/messenger/rooms [post] " }; /* ------------------------------------------------ */
         //req.io.sockets.emit("chat", temp);
         //console.log("new msg ---------->>>>>" + temp.sender + "\n" + temp.message);
 
-        console.log(`@/meggenger/rooms [post] : req.body : ${JSON.stringify(req.body)}`);
+        console.log(`@/messenger/rooms [post] : req.body : ${JSON.stringify(req.body)}`);
         var { formTitleSender, roomNameOrId, enabelPassword, password } = req.body;
 
         if (roomNameOrId == null || formTitleSender == null || (formTitleSender !== "Create new Room" && formTitleSender !== "Join new Room")) {
@@ -88,7 +88,7 @@ router.post('/rooms', async (req, res) => {
             //do {
             //    currRoomId = Math.random().toString(36).substring(2) + Date.now().toString(36);
             //    data = await roomsDatabase.find({ roomId: currRoomId });
-            //    console.log(`@/meggenger/rooms [post] : [Create room] mongodb data : ${data}`);
+            //    console.log(`@/messenger/rooms [post] : [Create room] mongodb data : ${data}`);
             //} while (data.length !== 0);
 
             const encryptedNewPassword = await bcrypt.hash(currPassword, 10);
@@ -104,14 +104,14 @@ router.post('/rooms', async (req, res) => {
                     admin: true
                 }]
             });
-            return res.json({ result: true, redirect: `/meggenger/rooms/${currRoomId}`, alert: `New room '${roomNameOrId}' created with ID: '${currRoomId}', Password: '${password}' ` });
+            return res.json({ result: true, redirect: `/messenger/rooms/${currRoomId}`, alert: `New room '${roomNameOrId}' created with ID: '${currRoomId}', Password: '${password}' ` });
 
 
         } else if (formTitleSender === "Join new Room") {
             /**************************************************** Join new Room ****************************************/
             currRoomId = roomNameOrId;
             data = await roomsDatabase.findOne({ roomId: currRoomId });
-            console.log(`@/meggenger/rooms [post] : [join room] mongodb data : ${data}`);
+            console.log(`@/messenger/rooms [post] : [join room] mongodb data : ${data}`);
             if (data != null && data.length != 0) {
 
                 const roomPassword = data.password;
@@ -127,7 +127,7 @@ router.post('/rooms', async (req, res) => {
                             admin: false
                         });
                         await data.save();
-                        return res.json({ result: true, redirect: `/meggenger/rooms/${currRoomId}`, alert: "Join successful!" });
+                        return res.json({ result: true, redirect: `/messenger/rooms/${currRoomId}`, alert: "Join successful!" });
                     } else {
                         return res.json({ result: false, alert: "Invalid Password!!!" });
                     }
@@ -141,22 +141,20 @@ router.post('/rooms', async (req, res) => {
         //return res.json({ result: false, alert: "if- else end -->>> Input field invalid !!! either due to invalid access to server or communication error, try again after sometime or try contacting the admin!!!" });
 
     } catch (error) {
-        console.log(`Error @/meggenger/rooms [post] : ${error}`);
+        console.log(`Error @/messenger/rooms [post] : ${error}`);
         return res.json({ result: false, alert: "Something went wrong, try again after sometime or try contacting the admin!!!" });
     }
 });
-
-
 
 
 router.get('/rooms/:roomId', async (req, res, next) => {
     try {
         const reqRoomId = req.params.roomId;
         if (reqRoomId == null) {
-            return res.redirect('/meggenger/rooms');
+            return res.redirect('/messenger/rooms');
         }
         const data = await roomsDatabase.findOne({ roomId: reqRoomId, participants: { $elemMatch: { username: req.session.name } } });
-        console.log(`@/meggenger/rooms/meggenger/:roomId [get] : data : ${JSON.stringify(data)}`);
+        console.log(`@/messenger/rooms/messenger/:roomId [get] : data : ${JSON.stringify(data)}`);
         if (data != null && data.length != 0) {
             console.log(`data.roomName : ${data.roomName}`)
             const plainData = data.toObject();
@@ -167,23 +165,11 @@ router.get('/rooms/:roomId', async (req, res, next) => {
 
             res.render('chat', { title: "SWE's world", roomData: JSON.stringify(plainData), roomId: data.roomId, roomName: data.roomName, userName: req.session.name, userId: req.session.userId });
         } else {
-            return res.redirect('/meggenger/rooms');
+            return res.redirect('/messenger/rooms');
         }
     } catch (error) {
-        console.log(`Error @/meggenger/rooms/:roomId [get] : ${error}`);
+        console.log(`Error @/messenger/rooms/:roomId [get] : ${error}`);
     }
-});
-
-router.get('/rooms/meggenger_v2', function (req, res, next) {
-    res.render('chat_v2', { title: "SWE's world", name: req.session.name });
-});
-
-router.get('/rooms/meggenger_v3', function (req, res, next) {
-    res.render('chat_v3', { title: "SWE's world", name: req.session.name });
-});
-
-router.get('/rooms/meggenger_v4', function (req, res, next) {
-    res.render('chat_v4', { title: "SWE's world", name: req.session.name });
 });
 
 

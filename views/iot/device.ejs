@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<script src="/socket.io/socket.io.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.2/socket.io.js" integrity="sha512-jMNwWSmjje4fjYut9MBGKXw5FZA6D67NHAuC9szpjbbjg51KefquNfvn4DalCbGfkcv/jHsHnPo1o47+8u4biA==" crossorigin="anonymous"></script>
+    <!-- Generate integrity using https://www.srihash.org/ -->
+    <script>function decodeString(str) {
+            return str.replace(/&#(\d+);/g, function (match, dec) {
+                return String.fromCharCode(dec);
+            });
+        }
+        const UserName = decodeString(decodeURIComponent("<%= encodeURIComponent(userName) %>"));
+        const UserId = decodeString(decodeURIComponent("<%= encodeURIComponent(userId) %>"));
+        const DeviceName = decodeString(decodeURIComponent("<%= encodeURIComponent(deviceName) %>"));
+        const DeviceId = decodeString(decodeURIComponent("<%= encodeURIComponent(deviceId) %>"));
+        const DeviceData = JSON.parse(decodeString(decodeURIComponent("<%= encodeURIComponent(deviceData) %>")));
+        const RecipientIds = DeviceData.participants.map(participant => participant.userId);
+        RecipientIds.splice(RecipientIds.indexOf(UserId), 1);</script>
+    <link rel="stylesheet" href="/main.css">
+    <!--<link rel="stylesheet" href="/chat.css">-->
+    <link rel="stylesheet" href="/device.css">
+    <title><%= unescape( title ) %></title>
+</head>
+<body>
+    <div id="content-container">
+        <div id="content">
+            <header id="header-content">
+                <nav class="navigation" role="navigation">
+                    <ul class="app" role="tablist">
+                        <li><a trager="_self" href="#" class="logo" title="Go to homepage" aria-label="Go to homepage">UNIVERSAL CHAT</a></li>
+                        <li><a target="_self" href="/messenger/rooms" title="Go to messenger" aria-label="Go to messenger">Messenger</a></li>
+                        <li><a target="_self" href="/iot/devices" title="Go to I0T" aria-label="Go to IOT">IOT</a></li>
+                    </ul>
+                    <ul class="user" role="tablist">
+                        <li><a target="_self" href="#" title="room name" aria-label="roomname"><%= unescape(deviceName) %></a></li>
+                        <li><a target="_self" href="#" title="username" aria-label="username"><%= unescape(userName) %></a></li>
+                        <li><a trager="_self" href="/users/logout" title="Logout" aria-label="Logout">logout</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <div class="divice-output-content">
+                <div class="device-output-log">
+                    <div class="output">
+                        <div class="message">
+                            <div class="name">data</div>
+                            <div class="textcont">[sample msg for debugging]</div>
+                            <div class="time">time</div>
+                        </div>
+                    </div>
+                    <div class="output">
+                        <div class="message">
+                            <div class="name">data</div>
+                            <div class="textcont">[sample msg for debugging]</div>
+                            <div class="time">time</div>
+                        </div>
+                    </div>
+                    <div class="output">
+                        <div class="message">
+                            <div class="name">data</div>
+                            <div class="textcont">[sample msg for debugging]</div>
+                            <div class="time">time</div>
+                        </div>
+                    </div>
+                    <div class="output">
+                        <div class="message">
+                            <div class="name">data</div>
+                            <div class="textcont">[sample msg for debugging]</div>
+                            <div class="time">time</div>
+                        </div>
+                    </div>
+                    <div class="output">
+                        <div class="message">
+                            <div class="name">data</div>
+                            <div class="textcont">[sample msg for debugging]</div>
+                            <div class="time">time</div>
+                        </div>
+                    </div>
+                    <div class="output">
+                        <div class="message">
+                            <div class="name">data</div>
+                            <div class="textcont">[sample msg for debugging]</div>
+                            <div class="time">time</div>
+                        </div>
+                    </div>
+                    <div class="output">
+                        <div class="message">
+                            <div class="name">data</div>
+                            <div class="textcont">[sample msg for debugging]</div>
+                            <div class="time">time</div>
+                        </div>
+                    </div>
+                    <div class="output">
+                        <div class="message">
+                            <div class="name">data</div>
+                            <div class="textcont">[sample msg for debugging]</div>
+                            <div class="time">time</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="console-content">
+                <div class="console-log" id="console-log">
+                    <!--<p>
+                        <div class="user"><span class="info">subanesh></span>This is subanesh's message</div>
+                    </p>
+                    <p>
+                        <div class="device"><span class="info">device></span>This is subanesh's ESP 32 message</div>
+                    </p>-->
+                </div>
+            </div>
+            <div id="input-container">
+                <!--onclick="document.querySelector('#input-message').focus()"-->
+                <div id="input-message-outer">
+                    <textarea id="input-message" placeholder="Type something..."></textarea>
+                </div>
+                <button id="send-message">Send</button>
+            </div>
+        </div>
+    </div>
+    <script src="/device.js"></script>
+</body>
+</html>

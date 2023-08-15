@@ -19,14 +19,16 @@ const mongoose = require('mongoose');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const messengerRouter = require('./routes/messenger');
+const iotRouter = require('./routes/iot');
 
 
 // view engine setup
 const viewsPaths = [
     path.join(__dirname, 'views'),
     path.join(__dirname, 'views', 'index'),
-    path.join(__dirname, 'views', 'messenger'),
     path.join(__dirname, 'views', 'users'),
+    path.join(__dirname, 'views', 'messenger'),
+    path.join(__dirname, 'views', 'iot'),
 ];
 app.set('views', viewsPaths);
 app.set('view engine', 'ejs');
@@ -53,7 +55,7 @@ const mongooseMaximumRetryCount = 10;
 const mongooseRetryTimeout = 5000;
 
 function mongooseConnectWithRetry() {
-    console.log('[SUBANESH] Requestion MongoDB connection...');
+    console.log('[SUBANESH] Requesting MongoDB connection...');
 
     mongoose.connect(process.env.MONGO_URI, {
         maxPoolSize: 50,
@@ -65,7 +67,7 @@ function mongooseConnectWithRetry() {
             console.error(err.stack)
             mongooseRetryCount++;
             if (mongooseRetryCount < mongooseMaximumRetryCount) {
-                console.log(`[SUBANESH] Retrying count: ${mongooseRetryCount}, Requestion MongoDB connection in ${mongooseRetryTimeout} Seconds...`);
+                console.log(`[SUBANESH] Retrying count: ${mongooseRetryCount}, Requesting MongoDB connection in ${mongooseRetryTimeout} Seconds...`);
                 setTimeout(mongooseConnectWithRetry, mongooseRetryTimeout);
             } else {
                 console.log(`[SUBANESH] Retrying count: ${mongooseRetryCount}, Maximum retries reached. Exiting...`);
@@ -110,9 +112,19 @@ socketIo.on('connection', socket => {
             console.log(`Sending message by UserId: ${UserId}, SocketId: ${socket.id} ==> roomId:'${roomId}', recipientId:'${recipientId}', data:'${JSON.stringify(data)}' `);
         })
     })
+
+    socket.on('iotSendMessage', (receivedData) => {
+        const { recipientIds, deviceId, data } = receivedData;
+        console.log(`Received message by UserId: ${UserId}, SocketId: ${socket.id} ==> deviceId:'${deviceId}', recipientIds:'${recipientIds}', data:'${JSON.stringify(data)}' `);
+
+        recipientIds.forEach(recipientId => {
+            socket.broadcast.to(recipientId).emit('iotReceiveMessage', receivedData);
+            console.log(`Sending message by UserId: ${UserId}, SocketId: ${socket.id} ==> deviceId:'${deviceId}', recipientId:'${recipientId}', data:'${JSON.stringify(data)}' `);
+        })
+    })
 })
 
-app.use('/users/login', (req, res, next) => {
+app.use('/messenger', (req, res, next) => {
     const detector = new DeviceDetector({
         clientIndexes: true,
         deviceIndexes: true,
@@ -144,8 +156,9 @@ app.all('/', function (req, res, next) {
 //})
 
 app.use('/', indexRouter);
-app.use('/messenger', messengerRouter);
 app.use('/users', usersRouter);
+app.use('/iot', iotRouter);
+app.use('/messenger', messengerRouter);
 
 
 // catch 404 and forward to error handler
